@@ -1,8 +1,10 @@
 package com.example.orderservice.controller;
 
-import com.example.orderservice.dto.req.OrderCreateReq;
+import com.example.orderservice.dto.req.OrderCreateRequest;
+import com.example.orderservice.entity.Order;
 import com.example.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +18,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<String> createOrder(@RequestBody OrderCreateReq req) {
-        orderService.createOrder(req);
-        return ResponseEntity.ok().body("Order created successfully");
+    public ResponseEntity<Order> createOrder(@RequestBody OrderCreateRequest req) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(req));
     }
 }
